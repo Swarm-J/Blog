@@ -1,25 +1,31 @@
-<h1>Hello World!</h1>
+{% extends 'base.html' %}
 
-<p>This is my first webpage, JK already made more!</p>
+{% block content %}
 
-<p>My name is {{ first_name }} </p>
+    <h1>Hello World!</h1>
 
-<p>{{stuff|title}}</p>
+    <p>This is my first webpage, JK already made more!</p>
 
-<h3> Favorite Pizza:</h3>
-    <p> {% for topping in favorite_pizza %}
-            {% if topping == 41 %}
+    <p>My name is {{ first_name }} </p>
 
-            {{ topping }} is a number<br>
+    <p>{{stuff|title}}</p>
 
-            {% else %}
+    <h3> Favorite Pizza:</h3>
+        <p> {% for topping in favorite_pizza %}
+                {% if topping == 41 %}
 
-            {{ topping|reverse }} is not a number <br>
+                {{ topping }} is a number<br>
 
-            {% endif %}
+                {% else %}
 
-        {% endfor %}
-    </p>
+                {{ topping|reverse }} is not a number <br>
 
-    <br>
-    {{ favorite_pizza.2|reverse }}
+                {% endif %}
+
+            {% endfor %}
+        </p>
+
+        <br>
+        {{ favorite_pizza.2|reverse }}
+
+{% endblock %}
