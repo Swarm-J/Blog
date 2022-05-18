@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>{{ message }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+
+{% if id == current_user.id %}
+
+    <h1>Update User...</h1>
+    <br><br>
+    
+    
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <form action="/update/{{name_to_update.id}}"  method="POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.username.label(class="form-label") }}
+
+            {{ form.username(class="form-control w-50 p-2 center-form", value=name_to_update.username) }}
+            <br>
+            {{ form.name.label(class="form-label") }}
+
+            {{ form.name(class="form-control w-50 p-2 center-form", value=name_to_update.name) }}
+            <br>
+            {{ form.email.label(class="form-label") }}
+
+            {{ form.email(class="form-control w-50 p-2 center-form", value=name_to_update.email) }}
+            <br> 
+            {{ form.about_author.label(class="form-label") }}
+
+            {{ form.about_author(class="form-control w-50 p-2 center-form", value=name_to_update.about_author) }}
+            <br><br>
+            {{ form.submit(class="btn btn-secondary") }}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Cancel</a>
+            <a href="{{ url_for('delete', id=id) }}" class="btn btn-primary">Delete</a>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteModal">Delete</button>
+        
+
+        </form>
+    </div>
+
+    <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete user {{ name_to_update.name }}?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <a class="btn btn-danger" href="{{ url_for('delete', id=id) }}" data-bs-dismiss="modal">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% else %}
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  Sorry! You Can't Edit This User...
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<h2>Access Denied!</h2>
+<p>Sorry, you cannot access this user profile...</p>
+
+{% endif %}
+
+{% endblock %}
