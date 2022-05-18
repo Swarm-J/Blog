@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "my super secret key yo"
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:870113069FL4$K1987!@localhost/users'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ubecxxhtnjklgx:d2858f9e0c7a97fe3aa7d4311ad800c1e6db050f8f005e5523beeb88ae93f200@ec2-54-165-184-219.compute-1.amazonaws.com:5432/d66ttie7aqu4cc'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://bbirytskgwgggr:c5dc13c57b500d22aca226afdaa92e369c7863c79df90d0144993c896089cc95@ec2-54-86-224-85.compute-1.amazonaws.com:5432/d2q6vfj8a9c679'
 
 UPLOAD_FOLDER = 'static/images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
