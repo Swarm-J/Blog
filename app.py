@@ -70,39 +70,46 @@ def dashboard():
         name_to_update.name = request.form['name']
         name_to_update.email = request.form['email']
         name_to_update.about_author = request.form['about_author']
-        name_to_update.profile_pic = request.files['profile_pic']
-
-        pic_filename = secure_filename(name_to_update.profile_pic.filename)
-        pic_name = str(uuid.uuid1()) + "_" + pic_filename
         
-        saver = request.files['profile_pic']
 
-        
-        name_to_update.profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER']), pic_name)
-        
-        name_to_update.profile_pic = pic_name
+        if request.files['profile_pic']:
+            name_to_update.profile_pic = request.files['profile_pic']
 
 
-        try:
+            pic_filename = secure_filename(name_to_update.profile_pic.filename)
+            pic_name = str(uuid.uuid1()) + "_" + pic_filename
+            
+            saver = request.files['profile_pic']
+
+            name_to_update.profile_pic = pic_name
+
+
+            try:
+                db.session.commit()
+                saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                flash('User Updated Successfully!')
+                return render_template('dashboard.html',
+                    form = form,
+                    name_to_update = name_to_update,
+                    id=id)
+            except:
+                flash('Error! Looks like there was a problem...try again!')
+                return render_template('dashboard.html',
+                    form = form,
+                    name_to_update = name_to_update,
+                    id=id)
+        else:
             db.session.commit()
-            saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
             flash('User Updated Successfully!')
             return render_template('dashboard.html',
-                form = form,
-                name_to_update = name_to_update,
-                id=id)
-        except:
-            flash('Error! Looks like there was a problem...try again!')
-            return render_template('dashboard.html',
-                form = form,
-                name_to_update = name_to_update,
-                id=id)
-
+                    form = form,
+                    name_to_update = name_to_update,
+                    id=id)
     else:
         return render_template('dashboard.html', 
-            form = form,
-            name_to_update = name_to_update,
-            id=id)
+        form = form,
+        name_to_update = name_to_update,
+        id=id)
 
 
 @app.route('/date')
@@ -142,7 +149,7 @@ def index():
 def admin():
     id = current_user.id
     
-    if id == 20:
+    if id == 1:
         return render_template('admin.html')
     else:
         flash("Sorry you don't have admin rights!")
@@ -396,7 +403,7 @@ def edit_post(id):
         flash('Post Edited Successfully!')
         return redirect(url_for('post', id=post.id))
     
-    if current_user.id == post.poster_id:
+    if current_user.id == post.poster_id or current_user.id == 1:
         form.title.data = post.title
         form.slug.data = post.slug
         form.content.data = post.content
@@ -414,7 +421,7 @@ def delete_post(id):
     post_to_delete = Posts.query.get_or_404(id)
     id = current_user.id
     
-    if id == post_to_delete.poster.id:
+    if id == post_to_delete.poster.id or id == 1:
     
         try:
             db.session.delete(post_to_delete)

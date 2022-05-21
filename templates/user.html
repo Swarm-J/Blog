@@ -4,4 +4,34 @@
 
 <h1>Hello {{name|lower}} </h1>
 
+<iframe src="https://www.youtube.com/embed/x7eEwfl9h94"></iframe>
+
+<iframe width="420" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1">
+</iframe>
+
+<iframe width="420" height="315"
+src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen="true" frameborder="0">
+</iframe>
+
+<html>
+  <body>
+    <!-- Add a placeholder for the Twitch embed -->
+    <div class="container" id="twitch-embed"></div>
+
+    <!-- Load the Twitch embed JavaScript file -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
+    <script type="text/javascript">
+      new Twitch.Embed("twitch-embed", {
+        width: 854,
+        height: 480,
+        channel: "IRONhartNL",
+        // Only needed if this page is going to be embedded on other websites
+        parent: ["embed.example.com", "othersite.example.com"]
+      });
+    </script>
+  </body>
+</html>
+
 {% endblock %}

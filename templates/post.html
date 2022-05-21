@@ -20,8 +20,39 @@
   {{ post.date_posted }}</small> <br><br>
   {{ post.content|safe }} <br><br>
 
+<div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-2">
+        {% if post.poster.profile_pic %}
 
-  {{ post.poster.about_author }}
+        <img src="{{ url_for('static', filename='images/' + current_user.profile_pic) }}" width="150" align="left">
+        
+        {% else %}
+
+        <img src="{{ url_for('static', filename='images/default-profile-pic.png') }}" width="150" align="left">
+
+        {% endif %}
+      </div>
+
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5  class="card-title">
+                {{ post.poster.name }}
+          </h5>
+  
+          <p class="card-text">
+            {% if post.poster.about_author %}
+              {{ post.poster.about_author }}
+            
+            {% else %}
+              Author has not filled out the about section...
+            {% endif %}
+            
+          </p>
+        </div>
+      </div>
+    </div>
+</div>
 </div>
 
 {% if current_user.id == post.poster_id %} 
